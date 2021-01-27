@@ -1,4 +1,4 @@
-FROM debian:10
+FROM debian:10-slim
 
 LABEL maintainer="captnbp"
 
