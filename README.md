@@ -33,21 +33,31 @@ By default, if you don't set environment variable, Squid is on open proxy mode
 ## Deploy Squid on open proxy mode
 
 ```sh
-docker run --name squid --hostname squid -p 3128:3128 -d diouxx/squid
+docker run --name squid --hostname squid -p 3128:3128 -d captnbp/squid
 ```
 
 ## Deploy Squid with LDAP Authentication
 ### LDAP
 
 ```sh
-docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=389 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
+docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=389 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d captnbp/squid
 ```
 
 ### LDAPS
 
 ```sh
-docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=636 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d diouxx/squid
+docker run --name squid --hostname squid -e LDAP_ENABLE=true -e LDAP_HOST=yourldap.domain.com -e LDAP_PORT=636 -e LDAP_DN="ou=Users,dc=yourdomain,dc=com" -e LDAP_ATTRIBUT="uid=%s" -e PROXY_NAME="Proxy Display Name" -p 3128:3128 -d captnbp/squid
 ```
+
+## Set TLS for HTTPS_PORT
+
+To set TLS on the proxy port, you neet to enable `HTTPS_PORT_ENABLE=true` and provide the `SERVER_TLS_CERT_PATH` with a pem file containing in the following order:
+
+- server key
+- server crt
+- CA crt
+
+The exposed port will be `8443`.
 
 # Deploy with docker-compose
 
@@ -60,7 +70,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: captnbp/squid
     container_name: squid
     hostname: squid
     ports:
@@ -79,7 +89,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: captnbp/squid
     container_name: squid
     hostname: squid
     ports:
@@ -104,7 +114,7 @@ version: '3.2'
 
 services: 
   squid:
-    image: diouxx/squid
+    image: captnbp/squid
     container_name: squid
     hostname: squid
     ports:
